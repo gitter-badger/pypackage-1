@@ -1,4 +1,4 @@
-"""Makefile like task runner for managing easing Python packaging and
+"""Makefile like python doit file for managing easing Python packaging and
 distributing related tasks. Modelled after cookiecutter-pypackage makefile [#]_
 
 References:
