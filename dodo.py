@@ -58,19 +58,17 @@ def create_files(*filepaths, overwrite=False, recursive=False):
         - write content
     """
     for filepath in filepaths:
-        dirname, basename = os.path.split(filepath)
+        if os.path.exists(filepath):
+            if overwrite:
+                os.remove(filepath)
+                create_files(filepath, overwrite=overwrite)
+        else:
+            dirname, basename = os.path.split(filepath)
+            if dirname:
+                os.makedirs(dirname, exist_ok=True)
 
-        if dirname:
-            os.makedirs(dirname, exist_ok=True)
-
-        if basename:
-            try:
-                with open(filepath, 'w') as fp:
-                    pass
-            except FileExistsError:
-                if overwrite:
-                    os.remove(filepath)
-                    create_files(filepath, overwrite=overwrite)
+            with open(filepath, 'w') as fp:
+                pass
 
 
 def remove_files(*pathnames, recursive=False):
@@ -110,16 +108,10 @@ def combine(*tasks):
 
 
 def task_setup_project():
-    """Create basic project file structure
-
-    - README.rst
-    - LICENSE.txt
-    - requirements.txt
-    - requirements-dev.txt"""
-    return {'actions': [
-        ['touch', 'README.rst', 'LICENSE.txt',
-         'requirements.txt', 'requirements-dev.txt']
-    ]}
+    """Create basic project file structure"""
+    files = ['README.rst', 'LICENSE.txt', 'requirements.txt',
+             'requirements-dev.txt']
+    return {'actions': [(create_files, files)]}
 
 
 def task_clean_build():
@@ -168,11 +160,14 @@ def task_docs(builder='html'):
 
 
 def task_release_docs():
-    """Clean old docs, build apidocs, compile html and import docs into gh-pages
-    branch
+    """Release the full compiled documentation
 
-    - github pages
-    - readthedocs
+    1. Clean old docs
+    2. build apidocs
+    3. Compile html
+    4. Release the docs
+        a) github pages using ghp-import
+        b) readthedocs.org
     """
     html_docs_dir = os.path.join(SOURCEDIR, BUILDDIR, 'html')
     return combine(task_clean_docs(),
@@ -188,7 +183,7 @@ def task_setup_coverage():
 
 def task_coverage():
     """Run coverage for the project"""
-    pass
+    return {'actions': []}
 
 
 def task_setup_pytest():
@@ -216,12 +211,14 @@ def task_dist():
     return {'actions': ['python setup.py sdist bdist_wheel']}
 
 
-def task_release():
-    """Upload a release of the package.
-    - PyPI release
-    - Conda release
-    """
-    pass
+def task_release_pypi():
+    """Upload a release of the package into PyPI"""
+    return {'actions': []}
+
+
+def task_release_conda():
+    """Upload a release of the package into conda-forge"""
+    return {'actions': []}
 
 
 def task_setup_travis():
