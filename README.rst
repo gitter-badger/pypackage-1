@@ -3,6 +3,7 @@ Tools for Creating and Managing Python Packages
 Directory structure
 
 ::
+
     .
     ├── docs/                   # Sphinx documentation
     |   ├── index.rst
