@@ -1,0 +1,15 @@
+## Docs
+sphinx
+ghp-import  # Github pages
+#sphinx_rtd_theme
+
+
+## Testing
+tox
+pytest        # Python testing framework
+pytest-cov    # Code coverage
+pytest-xdist  # Run test parallel
+
+
+## Versioning
+versioneer

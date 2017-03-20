@@ -138,7 +138,7 @@ def task_clean_test():
     return {'actions': [(remove_files, files)]}
 
 
-def task_init_docs():
+def task_setup_docs():
     """Invoke sphinx-quickstart"""
     return {'actions': [
         ['sphinx-quickstart', SOURCEDIR, '-p', PACKAGE, '-a', AUTHOR,
@@ -217,6 +217,21 @@ def task_test():
     return {'actions': ['py.test']}
 
 
+def task_setup_versioneer():
+    """Setup versioneer"""
+    return {'actions': ['versioneer', 'install']}
+
+
+def task_setuptools():
+    """Initialise setup.py and setup.cfg
+
+    Todo:
+         - setup.py from template
+    """
+    files = ['setup.py', 'setup.cfg']
+    return {'actions': [(create_files, files)]}
+
+
 def task_dist():
     """Build Python distribution"""
     return {'actions': ['python setup.py sdist bdist_wheel']}
@@ -242,6 +257,19 @@ def task_setup_appreyor():
     return {'actions': [(create_files, files)]}
 
 
-def task_setup_versioneer():
-    """Setup versioneer"""
-    return {'actions': ['versioneer', 'install']}
+def task_setup_cli():
+    """Setup commandline client for the project
+
+    Todo:
+        - load from template
+        - Options
+            - argparse
+            - click
+            - ...
+    """
+    return {'actions': []}
+
+
+def task_add_cli_entry_points():
+    """Add commandline interface entry points to setup.py"""
+    return {'actions': []}

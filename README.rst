@@ -36,4 +36,5 @@ Directory structure
     ├── .coveragerc             # Coverage configurations
     ├── .travis.yml             # Travis configurations
     ├── apprevor.yml            # Apprevor configurations
+    ├── dodo.py                 # Task automation file for python doit
     └── ...
