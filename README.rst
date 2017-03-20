@@ -7,8 +7,9 @@ Directory structure
     .
     ├── docs/                   # Sphinx documentation
     |   ├── index.rst
-    |   ├── makefile
-    |   ├── make.dot
+    |   ├── makefile            # Unix style makefile for sphinx
+    |   ├── make.dot            # Windows style makefile for sphinx
+    |   ├── conf.py             # Sphinx configuration file
     |   └── ...
     ├── package/
     |   ├── module/             # Module inside the package
