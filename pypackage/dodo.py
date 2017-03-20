@@ -12,9 +12,16 @@ Attributes:
     PACKAGE (str): Package name
     GITHUB_REPO (str): Github repository name
 """
+import logging
 import os
 import shutil
-from glob import iglob
+
+try:
+    from pathlib import Path
+except ImportError():
+    # If using python version < 3.4
+    from pathlib2 import Path
+
 
 # -----------------------------------------------------------------------------
 # Configurations and metadata
@@ -36,42 +43,38 @@ APIDOCSDIR = os.path.join(SOURCEDIR, 'apidocs')
 # doit configurations
 DOIT_CONFIG = {
     # 'default_tasks': [],
+    'verbosity': 0,
 }
+
+# Logging
+logger = logging.getLogger(__name__)
+
 
 # -----------------------------------------------------------------------------
 # Utils
 # -----------------------------------------------------------------------------
 
 
-def create_files(*filepaths, overwrite=False, recursive=False):
+def create_files(*filepaths):
     """Create files and folders.
 
     Examples:
         >>> create_files('file.txt', 'file2.txt')
 
     Args:
-        *filenames (str):
-        overwrite (bool):
-        recursive (bool):
+        *filenames (str|Path):
 
     Todo:
         - write content
     """
-    for filepath in filepaths:
-        if os.path.exists(filepath):
-            if overwrite:
-                os.remove(filepath)
-                create_files(filepath, overwrite=overwrite)
-        else:
-            dirname, basename = os.path.split(filepath)
-            if dirname:
-                os.makedirs(dirname, exist_ok=True)
-
-            with open(filepath, 'w') as fp:
-                pass
+    for filepath in map(Path, filepaths):
+        dirname, _ = os.path.split(str(filepath))
+        if dirname:
+            os.makedirs(dirname, exist_ok=True)
+        filepath.touch(exist_ok=True)
 
 
-def remove_files(*pathnames, recursive=False):
+def remove_files(*pathnames):
     """Remove files and folders. Supports unix style glob syntax.
 
     Examples:
@@ -79,14 +82,17 @@ def remove_files(*pathnames, recursive=False):
 
     Args:
         pathnames (str):
-        recursive (bool):
     """
-    for pathname in pathnames:
-        for path in iglob(pathname, recursive=recursive):
-            if os.path.isdir(path):
-                shutil.rmtree(path)
-            else:
-                os.remove(path)
+    p = Path('.')
+    for paths in map(p.glob, pathnames):
+        for pathname in map(Path, paths):
+            try:
+                if pathname.is_dir():
+                    shutil.rmtree(str(pathname))
+                else:
+                    os.remove(str(pathname))
+            except FileNotFoundError:
+                pass
 
 
 def combine(*tasks):

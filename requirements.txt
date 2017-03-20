@@ -1,6 +1,14 @@
 setuptools
-
+pathlib2    # pathlib port for python versions older than 3.4
 doit
+
+## Docs
+sphinx
+ghp-import  # Github pages
+
+
+## Testing
 tox
-pytest
-ghp-import
+pytest        # Python testing framework
+pytest-cov    # Code coverage
+pytest-xdist  # Run test parallel
