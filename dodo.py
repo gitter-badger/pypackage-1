@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 """Makefile like python doit file [#]_ for managing easing Python packaging and
 distributing related tasks. Modelled after cookiecutter-pypackage makefile [#]_
 
@@ -12,10 +14,11 @@ Attributes:
 """
 import os
 import shutil
-from functools import reduce
 from glob import iglob
 
-# Package metadata
+# -----------------------------------------------------------------------------
+# Configurations and metadata
+# -----------------------------------------------------------------------------
 AUTHOR = ''
 PACKAGE = ''
 GITHUB_REPO = ''
@@ -31,7 +34,13 @@ BUILDDIR = '_build'
 APIDOCSDIR = os.path.join(SOURCEDIR, 'apidocs')
 
 # doit configurations
-DOIT_CONFIG = {}
+DOIT_CONFIG = {
+    # 'default_tasks': [],
+}
+
+# -----------------------------------------------------------------------------
+# Utils
+# -----------------------------------------------------------------------------
 
 
 def remove_files(*pathnames, recursive=False):
@@ -54,6 +63,24 @@ def combine(*tasks):
     return {'actions': sum((task['actions'] for task in tasks), [])}
 
 
+# -----------------------------------------------------------------------------
+# doit tasks
+# -----------------------------------------------------------------------------
+
+
+def task_setup_project():
+    """Create basic project file structure
+
+    - README.rst
+    - LICENSE.txt
+    - requirements.txt
+    - requirements-dev.txt"""
+    return {'actions': [
+        ['touch', 'README.rst', 'LICENSE.txt',
+         'requirements.txt', 'requirements-dev.txt']
+    ]}
+
+
 def task_clean_build():
     """Clean build artifacts"""
     return {'actions': [(remove_files,
@@ -71,7 +98,7 @@ def task_clean_test():
     return {'actions': [(remove_files, ['.tox/', '.coverage', 'htmlcov/'])]}
 
 
-def task_make_docs():
+def task_init_docs():
     """Invoke sphinx-quickstart"""
     return {'actions': [
         ['sphinx-quickstart', SOURCEDIR, '-p', PACKAGE, '-a', AUTHOR,
@@ -109,8 +136,23 @@ def task_deploydocs():
                    {'actions': [['ghp-import', html_docs_dir]]})
 
 
+def task_setup_coverage():
+    """Create coverage files"""
+    return {'actions': [['touch', '.coveragerc']]}
+
+
 def task_coverage():
     """Run coverage for the project"""
+    pass
+
+
+def task_setup_pytest():
+    """Create configuration pytest"""
+    pass
+
+
+def task_setup_tox():
+    """Create tox configuration file"""
     pass
 
 
@@ -129,6 +171,17 @@ def task_dist():
     return {'actions': ['python setup.py sdist bdist_wheel']}
 
 
-def release():
-    """Upload a release of the package."""
+def task_release():
+    """Upload a release of the package.
+    - PyPI release
+    - Conda release
+    """
+    pass
+
+
+def task_setup_travis():
+    pass
+
+
+def task_setup_appreyor():
     pass
