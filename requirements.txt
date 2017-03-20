@@ -1,3 +1,6 @@
+setuptools
+
 doit
+tox
 pytest
 ghp-import

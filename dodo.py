@@ -43,8 +43,34 @@ DOIT_CONFIG = {
 # -----------------------------------------------------------------------------
 
 
+def create_files(*filenames, overwrite=False, recursive=False):
+    """Create files and folders. Supports unix style glob syntax.
+
+    Args:
+        *filenames (str):
+        overwrite (bool):
+        recursive (bool):
+    """
+    for filename in filenames:
+        for filepath in iglob(filename, recursive=recursive):
+            tail, head = os.path.split(filepath)
+
+            if tail:
+                os.makedirs(tail, exist_ok=True)
+
+            if head:
+                try:
+                    with open(filepath, 'w') as fp:
+                        # TODO: write content
+                        pass
+                except FileExistsError:
+                    if overwrite:
+                        os.remove(filename)
+                        create_files(filename, overwrite=overwrite)
+
+
 def remove_files(*pathnames, recursive=False):
-    """Remove files and folders using unix style glob syntax.
+    """Remove files and folders. Supports unix style glob syntax.
 
     Args:
         pathnames (str):
@@ -59,8 +85,12 @@ def remove_files(*pathnames, recursive=False):
 
 
 def combine(*tasks):
-    """Combine actions of different tasks"""
-    return {'actions': sum((task['actions'] for task in tasks), [])}
+    """Combine actions of different tasks
+
+    Args:
+        *tasks (dict): Tasks that containing actions to be combined
+    """
+    return {'actions': sum((task.get('actions', []) for task in tasks), [])}
 
 
 # -----------------------------------------------------------------------------
@@ -148,12 +178,12 @@ def task_coverage():
 
 def task_setup_pytest():
     """Create configuration pytest"""
-    pass
+    return {'actions': [['touch', 'pytest.ini']]}
 
 
 def task_setup_tox():
     """Create tox configuration file"""
-    pass
+    return {'actions': [['touch', 'tox.ini']]}
 
 
 def task_test():
@@ -180,8 +210,8 @@ def task_release():
 
 
 def task_setup_travis():
-    pass
+    return {'actions': [['touch', '.travis.yml']]}
 
 
 def task_setup_appreyor():
-    pass
+    return {'actions': [['touch', 'appreyor.yml']]}
