@@ -122,19 +122,20 @@ def task_setup_project():
 
 def task_clean_build():
     """Clean build artifacts"""
-    return {'actions': [(remove_files,
-                         ['build/', 'dist/', '.eggs/', '*.egg-info', '*.egg'])]}
+    files = ['build/', 'dist/', '.eggs/', '*.egg-info', '*.egg']
+    return {'actions': [(remove_files, files)]}
 
 
 def task_clean_pyc():
     """Clean python file artifacts"""
-    return {'actions': [
-        (remove_files, ['*.pyc', '*.pyo', '*~', '__pycache__'])]}
+    files = ['*.pyc', '*.pyo', '*~', '__pycache__']
+    return {'actions': [(remove_files, files)]}
 
 
 def task_clean_test():
     """Clean test and coverage artifacts"""
-    return {'actions': [(remove_files, ['.tox/', '.coverage', 'htmlcov/'])]}
+    files = ['.tox/', '.coverage', 'htmlcov/']
+    return {'actions': [(remove_files, files)]}
 
 
 def task_init_docs():
@@ -147,7 +148,8 @@ def task_init_docs():
 
 def task_clean_docs():
     """Clean documentation"""
-    return {'actions': [(remove_files, [os.path.join(SOURCEDIR, BUILDDIR)])]}
+    files = [os.path.join(SOURCEDIR, BUILDDIR)]
+    return {'actions': [(remove_files, files)]}
 
 
 def task_apidocs():
@@ -184,7 +186,8 @@ def task_release_docs():
 
 def task_setup_coverage():
     """Create coverage files"""
-    return {'actions': [['touch', '.coveragerc']]}
+    files = ['.coveragerc']
+    return {'actions': [(create_files, files)]}
 
 
 def task_coverage():
@@ -194,12 +197,14 @@ def task_coverage():
 
 def task_setup_pytest():
     """Create configuration pytest"""
-    return {'actions': [['touch', 'pytest.ini', 'conftest.py']]}
+    files = ['pytest.ini', 'conftest.py']
+    return {'actions': [(create_files, files)]}
 
 
 def task_setup_tox():
     """Create tox configuration file"""
-    return {'actions': [['touch', 'tox.ini']]}
+    files = ['tox.ini']
+    return {'actions': [(create_files, files)]}
 
 
 def task_test():
@@ -228,8 +233,10 @@ def task_release_conda():
 
 
 def task_setup_travis():
-    return {'actions': [['touch', '.travis.yml']]}
+    files = ['.travis.yml']
+    return {'actions': [(create_files, files)]}
 
 
 def task_setup_appreyor():
-    return {'actions': [['touch', 'appreyor.yml']]}
+    files = ['appreyor.yml']
+    return {'actions': [(create_files, files)]}
