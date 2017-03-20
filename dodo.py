@@ -189,7 +189,7 @@ def task_coverage():
 
 def task_setup_pytest():
     """Create configuration pytest"""
-    return {'actions': [['touch', 'pytest.ini']]}
+    return {'actions': [['touch', 'pytest.ini', 'conftest.py']]}
 
 
 def task_setup_tox():

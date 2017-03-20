@@ -15,8 +15,7 @@ Directory structure
 |   |   └── ...
 |   ├── __init__.py
 |   ├── _version.py         # Versioneer file. Created by versioneer.
-|   ├── logging.py |        # Logging configuration file
-        logging.yaml
+|   ├── logging.{yml,json,py}   # Logging configuration file. Can be yaml, json or python file.
 |   ├── exceptions.py       # Project exceptions 
 |   ├── cli.py              # Commandline interface
 |   └── ...
@@ -29,8 +28,8 @@ Directory structure
 ├── MANIFEST                # Manages which files are included in the distribution 
 ├── requirements.txt        # Libraries that are required to install this package
 ├── requirements-dev.txt    # Libraries that are required for developing this package
-├── pytest.ini |            # Pytest configuration file
-    tox.ini                 # Tox configuration file. Can contain pytest configurations
+├── pytest.ini              # Pytest configuration file
+├── tox.ini                 # Tox configuration file.
 ├── conftest.py             # More pytest configurations
 ├── .coveragerc             # Coverage configurations
 ├── .travis.yml             # Travis configurations 
@@ -82,7 +81,7 @@ Common but optional files and modules
 - [ ] Exceptions
 - [ ] Command line client & entry points
 
- Services
+Services
  
 - [ ] Remote Repository
     - [ ] GitHub
@@ -102,6 +101,9 @@ Common but optional files and modules
     - [ ] Gitter
 - [ ] Coverage
     - [ ] coveralls.io
+
+- [ ] Add badges for corresponding services to readme file
+
 
 Task Automation
 
