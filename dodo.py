@@ -167,9 +167,13 @@ def task_docs(builder='html'):
     ]}
 
 
-def task_deploydocs():
+def task_release_docs():
     """Clean old docs, build apidocs, compile html and import docs into gh-pages
-    branch"""
+    branch
+
+    - github pages
+    - readthedocs
+    """
     html_docs_dir = os.path.join(SOURCEDIR, BUILDDIR, 'html')
     return combine(task_clean_docs(),
                    task_apidocs(),
