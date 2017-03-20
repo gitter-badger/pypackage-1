@@ -55,37 +55,37 @@ logger = logging.getLogger(__name__)
 # -----------------------------------------------------------------------------
 
 
-def create_files(*filepaths):
+def create_files(*paths):
     """Create files and folders.
 
     Examples:
         >>> create_files('file.txt', 'file2.txt')
 
     Args:
-        *filenames (str|Path):
+        *paths (str|Path):
 
     Todo:
         - write content
     """
-    for filepath in map(Path, filepaths):
+    for filepath in map(Path, paths):
         dirname, _ = os.path.split(str(filepath))
         if dirname:
             os.makedirs(dirname, exist_ok=True)
         filepath.touch(exist_ok=True)
 
 
-def remove_files(*pathnames):
+def remove_files(*paths):
     """Remove files and folders. Supports unix style glob syntax.
 
     Examples:
         >>> remove_files('file.txt', '**/file.txt', 'file.*')
 
     Args:
-        pathnames (str):
+        *paths (str|Path):
     """
     p = Path('.')
-    for paths in map(p.glob, pathnames):
-        for pathname in map(Path, paths):
+    for path in paths:
+        for pathname in p.glob(str(path)):
             try:
                 if pathname.is_dir():
                     shutil.rmtree(str(pathname))
