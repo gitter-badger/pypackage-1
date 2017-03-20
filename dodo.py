@@ -43,34 +43,41 @@ DOIT_CONFIG = {
 # -----------------------------------------------------------------------------
 
 
-def create_files(*filenames, overwrite=False, recursive=False):
-    """Create files and folders. Supports unix style glob syntax.
+def create_files(*filepaths, overwrite=False, recursive=False):
+    """Create files and folders.
+
+    Examples:
+        >>>
 
     Args:
         *filenames (str):
         overwrite (bool):
         recursive (bool):
+
+    Todo:
+        - write content
     """
-    for filename in filenames:
-        for filepath in iglob(filename, recursive=recursive):
-            tail, head = os.path.split(filepath)
+    for filepath in filepaths:
+        dirname, basename = os.path.split(filepath)
 
-            if tail:
-                os.makedirs(tail, exist_ok=True)
+        if dirname:
+            os.makedirs(dirname, exist_ok=True)
 
-            if head:
-                try:
-                    with open(filepath, 'w') as fp:
-                        # TODO: write content
-                        pass
-                except FileExistsError:
-                    if overwrite:
-                        os.remove(filename)
-                        create_files(filename, overwrite=overwrite)
+        if basename:
+            try:
+                with open(filepath, 'w') as fp:
+                    pass
+            except FileExistsError:
+                if overwrite:
+                    os.remove(filepath)
+                    create_files(filepath, overwrite=overwrite)
 
 
 def remove_files(*pathnames, recursive=False):
     """Remove files and folders. Supports unix style glob syntax.
+
+    Examples:
+        >>>
 
     Args:
         pathnames (str):
@@ -86,6 +93,10 @@ def remove_files(*pathnames, recursive=False):
 
 def combine(*tasks):
     """Combine actions of different tasks
+
+    Examples:
+        >>> combine({'actions': ['action1']}, {'actions': ['action2']})
+        {'actions': ['action1', 'action2']}
 
     Args:
         *tasks (dict): Tasks that containing actions to be combined
