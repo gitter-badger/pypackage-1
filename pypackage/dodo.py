@@ -240,3 +240,8 @@ def task_setup_travis():
 def task_setup_appreyor():
     files = ['appreyor.yml']
     return {'actions': [(create_files, files)]}
+
+
+def task_setup_versioneer():
+    """Setup versioneer"""
+    return {'actions': ['versioneer', 'install']}
