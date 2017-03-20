@@ -1,5 +1,9 @@
 Tools for Creating and Managing Python Packages
 -----------------------------------------------
+Python package creation automation using ``doit`` library. Inspired by the Cookiecutter_ project.
+
+.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+
 Directory structure
 
 ::
