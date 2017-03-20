@@ -47,7 +47,7 @@ def create_files(*filepaths, overwrite=False, recursive=False):
     """Create files and folders.
 
     Examples:
-        >>>
+        >>> create_files('file.txt', 'file2.txt')
 
     Args:
         *filenames (str):
@@ -77,7 +77,7 @@ def remove_files(*pathnames, recursive=False):
     """Remove files and folders. Supports unix style glob syntax.
 
     Examples:
-        >>>
+        >>> remove_files('file.txt', '**/file.txt', 'file.*')
 
     Args:
         pathnames (str):
