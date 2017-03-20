@@ -30,7 +30,6 @@ SOURCEDIR = 'docs'
 BUILDDIR = '_build'
 APIDOCSDIR = os.path.join(SOURCEDIR, 'apidocs')
 
-
 # doit configurations
 DOIT_CONFIG = {}
 
@@ -53,26 +52,21 @@ def remove_files(*pathnames, recursive=False):
 def task_clean_build():
     """Clean build artifacts"""
     return {'basename': 'clean_build',
-            'actions': [(remove_files, ['build/', 'dist/', '.eggs/', '*.egg-info', '*.egg'])]}
+            'actions': [(remove_files,
+                         ['build/', 'dist/', '.eggs/', '*.egg-info', '*.egg'])]}
 
 
 def task_clean_pyc():
     """Clean python file artifacts"""
     return {'basename': 'clean_pyc',
-            'actions': [(remove_files, ['*.pyc', '*.pyo', '*~', '__pycache__'])]}
+            'actions': [
+                (remove_files, ['*.pyc', '*.pyo', '*~', '__pycache__'])]}
 
 
 def task_clean_test():
     """Clean test and coverage artifacts"""
     return {'basename': 'clean_test',
             'actions': [(remove_files, ['.tox/', '.coverage', 'htmlcov/'])]}
-
-
-# def task_clean_artifacts():
-#     """Clean build, pyc and test artifacts"""
-#     tasks = (task_clean_pyc, task_clean_test, task_clean_build)
-#     for task in tasks:
-#         yield task()
 
 
 def task_make_docs():
@@ -92,16 +86,19 @@ def task_clean_docs():
 
 def task_apidocs():
     """Build apidocs"""
-    return {'basename': 'apidocs', 'actions': [
-        [SPHINXAPIDOC, PACKAGE, '-o', APIDOCSDIR, '-E', '--no-toc', '--force']
-    ]}
+    return {'basename': 'apidocs',
+            'actions': [
+                [SPHINXAPIDOC, PACKAGE, '-o', APIDOCSDIR, '-E', '--no-toc',
+                 '--force']
+            ]}
 
 
 def task_docs(builder='html'):
-    """Build html docs"""
-    return {'basename': 'docs', 'actions': [
-        [SPHINXBUILD, '-b', builder, SOURCEDIR, BUILDDIR, SPHINXOPTS]
-    ]}
+    """Build docs with defined ``builder``"""
+    return {'basename': 'docs',
+            'actions': [
+                [SPHINXBUILD, '-b', builder, SOURCEDIR, BUILDDIR, SPHINXOPTS]
+            ]}
 
 
 # def task_deploydocs():
@@ -115,10 +112,26 @@ def task_docs(builder='html'):
 #             'actions': [['ghp-import', html_docs_dir]]}
 
 
+def task_coverage():
+    """Run coverage for the project"""
+    pass
+
+
 def task_test():
+    """Run tests
+
+    - py.test
+    - tox
+    - setup.py test
+    """
     return {'actions': ['py.test']}
 
 
 def task_dist():
     """Build Python distribution"""
     return {'actions': ['python setup.py sdist bdist_wheel']}
+
+
+def release():
+    """Upload a release of the package."""
+    pass
