@@ -31,7 +31,7 @@ Directory structure
     ├── README                  # Readme
     ├── setup.cfg               # Setup configurations
     ├── setup.py                # Main setup file
-    ├── MANIFEST                # Manages which files are included in the distribution
+    ├── MANIFEST.in             # Manages which files are included in the distribution
     ├── requirements.txt        # Libraries that are required to install this package
     ├── requirements-dev.txt    # Libraries that are required for developing this package
     ├── pytest.ini              # Pytest configuration file
@@ -39,6 +39,6 @@ Directory structure
     ├── conftest.py             # More pytest configurations
     ├── .coveragerc             # Coverage configurations
     ├── .travis.yml             # Travis configurations
-    ├── apprevor.yml            # Apprevor configurations
+    ├── appveyor.yml            # Apprevor configurations
     ├── dodo.py                 # Task automation file for python doit
     └── ...
