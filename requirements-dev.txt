@@ -10,7 +10,7 @@ ghp-import==0.5.5  # Github pages
 tox==2.6.0
 pytest==3.0.7        # Python testing framework
 pytest-cov==2.4.0    # Code coverage
-pytest-xdist  # Run test parallel
+pytest-xdist==1.15.0  # Run test parallel
 
 
 ## Versioning
