@@ -1,5 +1,9 @@
 Tools for Creating and Managing Python Packages
 -----------------------------------------------
+
+.. image:: https://badges.gitter.im/pypackage/Lobby.svg
+   :alt: Join the chat at https://gitter.im/pypackage/Lobby
+   :target: https://gitter.im/pypackage/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 Python package creation automation using ``doit`` library. Inspired by the Cookiecutter_ project.
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
