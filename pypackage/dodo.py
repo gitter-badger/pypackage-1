@@ -9,7 +9,7 @@ References:
 
 Attributes:
     AUTHOR (str): Author's name
-    PACKAGE (str): Package name
+    PROJECT (str): Project/Package name
     GITHUB_REPO (str): Github repository name
 """
 import logging
@@ -29,7 +29,7 @@ except ImportError():
 # Configurations and metadata
 # -----------------------------------------------------------------------------
 AUTHOR = ''
-PACKAGE = ''
+PROJECT = ''
 GITHUB_REPO = ''
 
 # Supported python versions and runtimes.
@@ -49,7 +49,7 @@ SPHINXOPTS = ''
 SPHINXBUILD = 'sphinx-build'
 SPHINXAPIDOC = 'sphinx-apidoc'
 SPHINXQUICKSTART = 'sphinx-quickstart'
-SPHINXPROJ = PACKAGE
+SPHINXPROJ = PROJECT
 SOURCEDIR = 'docs'
 BUILDDIR = '_build'
 APIDOCSDIR = os.path.join(SOURCEDIR, 'apidocs')
@@ -161,7 +161,7 @@ def task_setup_project():
     return {'actions': [(create_files, files)]}
 
 
-def task_setup_version_control():
+def task_setup_git():
     return {'actions': ['git init',
                         (create_files, ['.gitignore'])]}
 
@@ -187,7 +187,7 @@ def task_clean_test():
 def task_setup_docs():
     """Invoke sphinx-quickstart"""
     return {'actions': [
-        ['sphinx-quickstart', SOURCEDIR, '-p', PACKAGE, '-a', AUTHOR,
+        ['sphinx-quickstart', SOURCEDIR, '-p', PROJECT, '-a', AUTHOR,
          '-v', '"0.1"', '-l', '"en"', '--makefile', '--batchfile',
          '--quiet']]}
 
@@ -201,7 +201,7 @@ def task_clean_docs():
 def task_apidocs():
     """Build apidocs"""
     return {'actions': [
-        [SPHINXAPIDOC, PACKAGE, '-o', APIDOCSDIR, '-E', '--no-toc',
+        [SPHINXAPIDOC, PROJECT, '-o', APIDOCSDIR, '-E', '--no-toc',
          '--force']
     ]}
 
@@ -311,6 +311,7 @@ def task_setup_cli():
         - Options
             - argparse
             - click
+            - docopt
             - ...
     """
     return {'actions': []}
