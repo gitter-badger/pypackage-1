@@ -14,4 +14,4 @@ pytest-xdist==1.15.0  # Run test parallel
 
 
 ## Versioning
-versioneer
+versioneer==0.18
