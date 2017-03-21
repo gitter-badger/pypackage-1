@@ -29,9 +29,9 @@ Common files and modules
 - [ ] Tests
     - [ ] pytest
     - [ ] tox
-    - [ ] Coverage
-        - [ ] pytest-cov
-        - [ ] .coveragerc 
+- [ ] Coverage
+    - [ ] pytest-cov
+    - [ ] .coveragerc 
 - [ ] Documentation
     - [ ] Sphinx
 - [ ] Versioning
@@ -44,7 +44,7 @@ Common but optional files and modules
 - [ ] Exceptions
 - [ ] Command line client & entry points
 
-Services
+Services and [GitHub Integrations](https://github.com/integrations)
  
 - [ ] Remote Repository
     - [ ] GitHub
@@ -63,7 +63,10 @@ Services
 - [ ] Communication / Chat
     - [ ] Gitter
 - [ ] Coverage
+    - [ ] codecov
     - [ ] coveralls.io
+- [ ] Code Quality
+    - [ ] quantifiedcode
 
 - [ ] Add badges for corresponding services to readme file
 

@@ -16,6 +16,8 @@ import logging
 import os
 import shutil
 
+import functools
+
 try:
     from pathlib import Path
 except ImportError():
@@ -30,6 +32,18 @@ AUTHOR = ''
 PACKAGE = ''
 GITHUB_REPO = ''
 
+# Supported python versions and runtimes.
+PYTHON_SUPPORT = {
+    'py26': False,
+    'py27': False,
+    'py33': False,
+    'py34': True,
+    'py35': True,
+    'py36': True,
+    'pypy': False,
+    'pypy3': False,
+}
+
 # Sphinx
 SPHINXOPTS = ''
 SPHINXBUILD = 'sphinx-build'
@@ -40,14 +54,41 @@ SOURCEDIR = 'docs'
 BUILDDIR = '_build'
 APIDOCSDIR = os.path.join(SOURCEDIR, 'apidocs')
 
-# doit configurations
-DOIT_CONFIG = {
-    # 'default_tasks': [],
-    'verbosity': 0,
-}
 
 # Logging
 logger = logging.getLogger(__name__)
+
+
+# -----------------------------------------------------------------------------
+# doit configurations
+# -----------------------------------------------------------------------------
+DOIT_CONFIG = {
+    'default_tasks': [],
+    'verbosity': 0,
+}
+
+
+def set_default_task(task):
+    """Decorator for setting task into default tasks
+
+    >>> @set_default_task
+    >>> def task_do_something():
+    >>>     ...
+
+    would do same as
+
+    >>> DOIT_CONFIG['default_tasks'].append('do_something')
+    """
+
+    @functools.wraps(task)
+    def wrapper(*args, **kwargs):
+        name = task.__name__.strip('task_')
+        globals().setdefault('DOIT_CONFIG', dict())
+        DOIT_CONFIG.setdefault('default_tasks', list())
+        DOIT_CONFIG['default_tasks'].append(name)
+        result = task(*args, **kwargs)
+        return result
+    return wrapper
 
 
 # -----------------------------------------------------------------------------
@@ -118,6 +159,11 @@ def task_setup_project():
     files = ['README.rst', 'LICENSE.txt', 'requirements.txt',
              'requirements-dev.txt']
     return {'actions': [(create_files, files)]}
+
+
+def task_setup_version_control():
+    return {'actions': ['git init',
+                        (create_files, ['.gitignore'])]}
 
 
 def task_clean_build():

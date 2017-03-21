@@ -1,0 +1,16 @@
+[run]
+source = {{ project }}
+omit =
+    */__init__.py,
+    */conftest.py,
+    */tests/*,
+    docs/*,
+
+    ; Django
+    *manage.py,
+    *settings*.py,
+    *urls.py,
+    *admin.py,
+    *migrations/*,
+    *wsgi.py,
+    *conftest.py,
