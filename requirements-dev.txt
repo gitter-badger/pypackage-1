@@ -7,7 +7,7 @@ ghp-import==0.5.5  # Github pages
 
 
 ## Testing
-tox
+tox==2.6.0
 pytest        # Python testing framework
 pytest-cov    # Code coverage
 pytest-xdist  # Run test parallel
