@@ -1,4 +1,4 @@
 setuptools==34.3.2
 pathlib2==2.2.1    # pathlib port for python versions older than 3.4
 doit==0.30.3
-cryptography
+cryptography==1.8.1
