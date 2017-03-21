@@ -1,3 +1,5 @@
+-r requirements.txt
+
 ## Docs
 sphinx
 ghp-import  # Github pages
