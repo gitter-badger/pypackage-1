@@ -1,4 +1,4 @@
-setuptools
+setuptools==34.3.2
 pathlib2    # pathlib port for python versions older than 3.4
 doit
 cryptography
