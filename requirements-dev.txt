@@ -1,7 +1,7 @@
 -r requirements.txt
 
 ## Docs
-sphinx
+sphinx==1.5.3
 ghp-import  # Github pages
 #sphinx_rtd_theme
 
