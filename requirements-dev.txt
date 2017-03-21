@@ -2,7 +2,7 @@
 
 ## Docs
 sphinx==1.5.3
-ghp-import  # Github pages
+ghp-import==0.5.5  # Github pages
 #sphinx_rtd_theme
 
 
